@@ -1,0 +1,45 @@
+### MNIST画像の表示
+# coding: utf-8
+import sys, os
+
+# 参照パスの追加 <絶対パス>
+sys.path.append('/Users/ra/DL-SMaster')
+# sys.path.append(os.pardir)  # 親ディレクトリのファイルをインポートするための設定
+
+import numpy as np
+from dataset.mnist import load_mnist
+from PIL import Image
+
+
+###### NumPy配列ndarrayを画像ファイルとして保存する方法 ######
+#### Image.fromarray()にndarrayを渡すとPIL.Imageが得られる ####
+######### save()メソッドで画像ファイルとして保存できる #########
+
+# 下記の関数は, 引数imgをPIL.imageとして変数に格納し, 表示する.
+def img_show(img_list):
+    pil_img = Image.fromarray(np.uint8(img_list))
+    pil_img.show()
+
+# load_mnist関数で, データセットを変数に格納.    
+(x_train, t_train), (x_test, t_test) = load_mnist(flatten=True, normalize=False)
+
+# 0番目のデータを表示
+img = x_train[0]
+label = t_train[0]
+print(label)  # 5
+
+for i in range(20, 25, 1):
+    img_list = x_train[i]
+    label_list = t_train[i]
+    print(label_list)
+    img_list = img.reshape(28, 28)  # 形状を元の画像サイズに変形
+    img_show(img_list)
+    
+
+print(img.shape)  # (784,)
+img = img.reshape(28, 28)  # 形状を元の画像サイズに変形
+print(img.shape)  # (28, 28)
+
+# img_show(img)
+
+
